@@ -15,8 +15,14 @@ EMAIL_PASSWORD = "qjxq crcl pxur zcgn"  # Replace with your email app password
 
 # Dummy user credentials
 USERS = {
-    "Noon": "Noon",
-    "Chloe": "Chloe"
+    "Noon": "1234",
+    "Chloe": "1234",
+    "Sang": "1234",
+    "Bryson": "1234",
+    "Ayane": "1234",
+    "Shahin": "1234",
+    "Jimena": "1234",
+    "Ames": "1234"
 }
 
 @app.route("/")
