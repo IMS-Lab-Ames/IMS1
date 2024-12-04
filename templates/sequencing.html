@@ -57,6 +57,8 @@
                     <th>Sample ID</th>
                     <th>Description</th>
                     <th>Primer</th>
+                    <th>PCR Concentration (ng/μL)</th>
+                    <th>PCR Volume (μL)</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -73,6 +75,8 @@
                             <option value="ITS">ITS</option>
                         </select>
                     </td>
+                    <td><input type="text" name="pcrConcentration" placeholder="Enter concentration" required></td>
+                    <td><input type="text" name="pcrVolume" placeholder="Enter volume" required></td>
                     <td><button type="button" class="deleteRow">Delete</button></td>
                 </tr>
             </tbody>
@@ -100,6 +104,8 @@
                             <option value="ITS">ITS</option>
                     </select>
                 </td>
+                <td><input type="text" name="pcrConcentration" placeholder="Enter concentration" required></td>
+                <td><input type="text" name="pcrVolume" placeholder="Enter volume" required></td>
                 <td><button type="button" class="deleteRow">Delete</button></td>
             `;
             table.appendChild(row);
@@ -130,12 +136,14 @@
                 const sampleID = row.querySelector('input[name="sampleID"]')?.value || '';
                 const description = row.querySelector('input[name="description"]')?.value || '';
                 const primer = row.querySelector('select[name="primer"]')?.value || '';
+                const pcrConcentration = row.querySelector('input[name="pcrConcentration"]')?.value || '';
+                const pcrVolume = row.querySelector('input[name="pcrVolume"]')?.value || '';
 
                 // Only add valid rows
-                if (sampleID && description && primer) {
-                    samples.push({ sampleID, description, primer });
+                 if (sampleID && description && primer && pcrConcentration && pcrVolume) {
+                    samples.push({ sampleID, description, primer, pcrConcentration, pcrVolume });
                 } else {
-                    console.warn('Skipping invalid row:', { sampleID, description, primer });
+                    console.warn('Skipping invalid row:', { sampleID, description, primer, pcrConcentration, pcrVolume });
                 }
             });
 
