@@ -18,6 +18,7 @@ USERS = {
     "Noon": "1234",
     "Chloe": "1234",
     "Sang": "1234",
+    "Matthijs": "1234",
     "Bryson": "1234",
     "Ayane": "1234",
     "Shahin": "1234",
