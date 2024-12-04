@@ -72,7 +72,9 @@ def submit_request():
             body += (
                 f"No.{idx} Sample ID: {sample['sampleID']}, "
                 f"Description: {sample['description']}, "
-                f"Primer: {sample['primer']}\n"
+                f"Primer: {sample['primer']}, "
+                f"PCR Concentration: {sample['pcrConcentration']} ng/μL, "
+                f"PCR Volume: {sample['pcrVolume']} μL\n"
             )
 
         # Send the email
@@ -88,7 +90,7 @@ def send_email(subject, body):
         msg = MIMEText(body)
         msg["Subject"] = subject
         msg["From"] = EMAIL_ADDRESS
-        msg["To"] = EMAIL_ADDRESS  # You can also customize this to send to others
+        msg["To"] = "ims.agri24@gmail.com, tan.kei.chloe.p2@dc.tohoku.ac.jp, yongstar.chanikarn.s3@dc.tohoku.ac.jp"  # You can also customize this to send to others
 
         with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
             server.starttls()
