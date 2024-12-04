@@ -81,3 +81,78 @@
         <br><br>
         <button type="submit">Submit</button>
     </form>
+
+    <script>
+        // Add row functionality
+        document.getElementById('addRow').addEventListener('click', () => {
+            const table = document.getElementById('sampleTable');
+            const rowCount = table.rows.length;
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${rowCount + 1}</td>
+                <td><input type="text" name="sampleID" placeholder="Enter Sample ID" required></td>
+                <td><input type="text" name="description" placeholder="Enter species" required></td>
+                <td>
+                    <select name="primer" required>
+                            <option value="" disabled selected>Select Primer</option>
+                            <option value="rnl16S">rnl16S</option>
+                            <option value="COI">COI</option>
+                            <option value="ITS">ITS</option>
+                    </select>
+                </td>
+                <td><button type="button" class="deleteRow">Delete</button></td>
+            `;
+            table.appendChild(row);
+
+            // Add delete functionality
+            row.querySelector('.deleteRow').addEventListener('click', () => {
+                row.remove();
+                updateRowNumbers();
+            });
+        });
+
+        // Update row numbers after deletion
+        function updateRowNumbers() {
+            const rows = document.querySelectorAll('#sampleTable tr');
+            rows.forEach((row, index) => {
+                row.children[0].textContent = index + 1;
+            });
+        }
+
+        // Form submission
+        document.getElementById('sequencingForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            // Collect form data
+            const samples = [];
+            const rows = document.querySelectorAll('#sampleTable tr');
+            rows.forEach((row) => {
+                const sampleID = row.querySelector('input[name="sampleID"]')?.value || '';
+                const description = row.querySelector('input[name="description"]')?.value || '';
+                const primer = row.querySelector('select[name="primer"]')?.value || '';
+
+                // Only add valid rows
+                if (sampleID && description && primer) {
+                    samples.push({ sampleID, description, primer });
+                } else {
+                    console.warn('Skipping invalid row:', { sampleID, description, primer });
+                }
+            });
+
+            // Send data to backend
+            try {
+                const response = await fetch('/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ samples }),
+                });
+                const result = await response.json();
+                alert(result.message || 'Submission successful!');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Submission failed. Check console for details.');
+            }
+        });
+    </script>
+</body>
+</html>
